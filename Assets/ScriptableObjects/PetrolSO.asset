@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c392fffd6c97c344b9806a4521a5a53, type: 3}
   m_Name: PetrolSO
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2890341178131924740, guid: bbe0272a25ca16a4780ba4badb7c577b, type: 3}
+  prefab: {fileID: 8729580745523711410, guid: 57b9812437644ca4abd2823f5597680f, type: 3}
   itemName: PetrolSO
