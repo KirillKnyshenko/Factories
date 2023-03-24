@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
     [SerializeField] private  float movementSpeed;
     [SerializeField] private VariableJoystick variableJoystick;
     [SerializeField] private List<StoreStack> inventoryStores;
+    public List<StoreStack> InventoryStores => inventoryStores;
+    [SerializeField] private float getDelayTimer;
+    [SerializeField] private float getDelayTimerMax = 5f;
+    private bool canDelay;
 
     private void Start() {
         Instance = this;
@@ -15,6 +19,18 @@ public class Player : MonoBehaviour
 
     private void Update() {
         Movement();
+
+        if (!canDelay)
+        {
+            getDelayTimer -= Time.deltaTime;
+
+            if (getDelayTimer < 0f)
+            {
+                getDelayTimer = getDelayTimerMax;
+
+                canDelay = true;
+            }
+        }
     }
 
     private void Movement() {
@@ -57,11 +73,38 @@ public class Player : MonoBehaviour
         transform.forward = Vector3.Slerp(transform.forward, direction, rotationSpeed * Time.deltaTime);
     }
 
+    public bool TryGetProduct(StoreStack inventoryStoreStack, StoreStack storeStack) {
+        if (canDelay)
+        {
+            // Player is ready to delay product
+            if (inventoryStoreStack.HaveAnyObject(out StackPoint inventoryStackPoint))
+            {
+                // Player has any output object
+                if (storeStack.HaveFreePoint(out StackPoint storeStackPoint))
+                {  
+                    // Store have free point
+                
+                    inventoryStoreStack.HandoverItem(inventoryStackPoint, storeStackPoint);
+
+                    canDelay = false;
+
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
     private void OnTriggerStay(Collider other)
     {
-        foreach (var inventoryStore in inventoryStores)
+        if (other.TryGetComponent<Factory>(out Factory factory))
         {
-            if (other.TryGetComponent<Factory>(out Factory factory))
+            foreach (var inventoryStore in inventoryStores)
             {
                 if (inventoryStore.ItemSOToStore == factory.ItemToOutput)
                 {

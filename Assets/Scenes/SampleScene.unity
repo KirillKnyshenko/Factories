@@ -988,6 +988,10 @@ PrefabInstance:
       value: Factory
       objectReference: {fileID: 0}
     - target: {fileID: 4710055749684750575, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
+      propertyPath: spawnTimer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710055749684750575, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
       propertyPath: itemToInput
       value: 
       objectReference: {fileID: 0}
@@ -1003,6 +1007,18 @@ PrefabInstance:
       propertyPath: itemToOutput
       value: 
       objectReference: {fileID: 11400000, guid: 73830bc8c0229634fab5cda5983e4146, type: 2}
+    - target: {fileID: 4710055749684750575, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
+      propertyPath: getDelayTimer
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710055749684750575, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
+      propertyPath: spawnTimerMax
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710055749684750575, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
+      propertyPath: getDelayTimerMax
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
 --- !u!4 &1345281162 stripped
@@ -1063,6 +1079,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!136 &1518249653
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518249650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1518533735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4710055749684750560, guid: ff16117fcdbfcf84099ba950c0bd9102, type: 3}
@@ -1673,6 +1703,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 581665961}
     - target: {fileID: 8132108631486481206, guid: b9731146be71d3f49ba7bb5b42b47c5f, type: 3}
+      propertyPath: getDelayTimerMax
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8132108631486481206, guid: b9731146be71d3f49ba7bb5b42b47c5f, type: 3}
       propertyPath: variableJoystick
       value: 
       objectReference: {fileID: 1660336149}
@@ -1696,5 +1730,6 @@ PrefabInstance:
       propertyPath: inventoryStores.Array.data[1]
       value: 
       objectReference: {fileID: 698733635}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8132108631187673094, guid: b9731146be71d3f49ba7bb5b42b47c5f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b9731146be71d3f49ba7bb5b42b47c5f, type: 3}

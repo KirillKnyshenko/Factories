@@ -22,9 +22,28 @@ public class Factory : MonoBehaviour
 
         if (spawnTimer < 0f)
         {
-            SpawnProduct();
+            if (storesInput != null)
+            {
+                // Factory reqiers inputs material to store
+                if (storesInput.HaveAnyObject(out StackPoint StackPoint))
+                {
+                    
+                    StackPoint.DeleteStackObject();
 
-            spawnTimer = spawnTimerMax;
+                    SpawnProduct();
+
+                    spawnTimer = spawnTimerMax;
+                    if (getDelayTimer < 0f)
+                    {
+                        getDelayTimer = getDelayTimerMax;
+                    }
+                } 
+            }
+            else
+            {
+                SpawnProduct();
+                spawnTimer = spawnTimerMax;
+            }   
         }
 
         if (!canDelay)
@@ -84,4 +103,19 @@ public class Factory : MonoBehaviour
         return false;
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent<Player>(out Player player))
+        {
+            foreach (var inventoryStore in player.InventoryStores)
+            {
+                if (itemToInput == inventoryStore.ItemSOToStore)
+                {
+                    if (player.TryGetProduct(inventoryStore, storesInput)) {
+                        return;
+                    } 
+                }
+            }
+        }
+    }
 }
