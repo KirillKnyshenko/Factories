@@ -11,12 +11,11 @@ public class Factory : MonoBehaviour
     [SerializeField] private float getDelayTimer;
     [SerializeField] private float getDelayTimerMax = 5f;
     private bool canDelay;
-    [SerializeField] private List<StoreStack> storesOutput;
-    [SerializeField] private List<StoreStack> storesInput;
+    [SerializeField] private StoreStack storeOutput;
+    [SerializeField] private StoreStack storesInput;
     [SerializeField] private ItemSO itemToInput;
     [SerializeField] private ItemSO itemToOutput;
     public ItemSO ItemToOutput => itemToOutput;
-    private Vector3 spawnPoint;
 
     private void Update() {
         spawnTimer -= Time.deltaTime;
@@ -42,56 +41,47 @@ public class Factory : MonoBehaviour
     }
 
     private void SpawnProduct() {
-        foreach (StoreStack storeOutput in storesOutput)
+        if (storeOutput.HaveFreePoint(out StackPoint stackPoint))
         {
-            if (storeOutput.HaveFreePoint(out StackPoint stackPoint))
+            // Stack has free point
+
+            storeOutput.CreateItemToStack(stackPoint);     
+
+            // Item was spawned, stop foreach
+
+            return;  
+        } 
+        else
+        {
+            //Item did not spawned
+        }
+    }
+
+    public bool TryGetProduct(StoreStack inventoryStoreStack) {
+        if (canDelay)
+        {
+            // Factory is ready to delay product
+            if (storeOutput.HaveAnyObject(out StackPoint stackPoint))
             {
-                // Stack has free point
+                // Factory has any output object
+                if (inventoryStoreStack.HaveFreePoint(out StackPoint inventoryStackPoint))
+                {  
+                    // Inventory have free point
+                
+                    storeOutput.HandoverItem(stackPoint, inventoryStackPoint);
 
-                storeOutput.AddItemToStack(stackPoint);     
+                    canDelay = false;
 
-                // Item was spawned, stop foreach
-
-                return;  
-            } 
+                    return true;
+                }
+            }
             else
             {
-                //Item did not spawned
+                return false;
             }
         }
+
+        return false;
     }
 
-    public void GetProduct(ItemSO getItem) {
-        foreach (StoreStack storeOutput in storesOutput)
-        {
-            if (storeOutput.ItemSOToStore == getItem)
-            {
-                if (canDelay)
-                {
-                    if (storeOutput.HaveAnyObject(out StackPoint stackPoint))
-                    {
-                        // Item get successfully
-                        Debug.Log("Item get successfully");
-                        
-                        storeOutput.RemoveItemFromStack(stackPoint);
-
-                        canDelay = false;
-                    }
-                }
-                else
-                {
-                    // Item did not get successfully
-                    Debug.Log("Item did not get successfully");
-                }
-            } 
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (!other.TryGetComponent<Player>(out Player player))
-        {
-            GetProduct(itemToOutput);
-        }
-    }
 }

@@ -59,22 +59,15 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        print(1);
-        if (other.TryGetComponent<Factory>(out Factory factory))
+        foreach (var inventoryStore in inventoryStores)
         {
-            print(2);
-            foreach (var inventoryStore in inventoryStores)
+            if (other.TryGetComponent<Factory>(out Factory factory))
             {
-                print(3);
                 if (inventoryStore.ItemSOToStore == factory.ItemToOutput)
                 {
-                    print(4);
-
-                    if (inventoryStore.isAnyFreePoint())
-                    {
-                        print(5);
-                        factory.GetProduct(factory.ItemToOutput);
-                    }
+                    if (factory.TryGetProduct(inventoryStore)) {
+                        return;
+                    } 
                 }
             }
         }

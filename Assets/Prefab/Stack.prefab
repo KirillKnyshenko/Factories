@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc7c26f33986d449af2fe1ed8172cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemSO: {fileID: 0}
+  storeStack: {fileID: 2477352874938871948}
 --- !u!114 &6289022977516034013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,3 +141,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stackPoint: {fileID: 1384441059183149348}
+  prefab: {fileID: 0}
